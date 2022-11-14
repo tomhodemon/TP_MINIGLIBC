@@ -56,7 +56,6 @@ void mini_perror(char *message) {
   mini_strcpy(error, message);
   *(error + message_len - 1) = *s;
   *(error + message_len) = '\0';
-  //printf("%d | %d | \n",  mini_strlen(message), mini_strlen(error)); print_malloc_list(); fflush(stdout);
   mini_printf(error);
  }
 
