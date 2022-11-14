@@ -1,0 +1,10 @@
+{
+  "files.associations": {
+    "stdio.h": "c",
+    "initializer_list": "c",
+    "stdlib.h": "c",
+    "mini_lib.h": "c",
+    "string.h": "c",
+    "errno.h": "c"
+  }
+}

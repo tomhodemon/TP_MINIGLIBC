@@ -1,0 +1,17 @@
+Exercice 5 : 
+Cela évite les fuites de mémoire. En effet, free ne reinitialise pas la mémoire du block à zero. Donc, en appelant calloc on s'assure que le block mémoire 
+dernièrement alloué est reinitialisé avec des zeros. Il est plus sécure d'utiliser calloc que malloc.
+
+Exercice 6 : 
+La fonction free indique au programme que le bloc mémoire passé en paramètre est de nouveau allouable/utilisable. 
+L'espace est disponible pour être alloué de nouveau.
+
+Exercice 17 : 
+Rien n'est affiché sur la sortie standard. Il reste à gérer le cas où la chaîne de caractère à afficher est de taille inférieur au tampon et ne contient
+pas de '\n' (danc ce cas, write n'est pas appelé).
+
+Exercice 20 : 
+
+Exercice 22 : 
+Si les chaînes de caractères sont mal définie on peut avoir des fuites de mémoires.
+Dans mini_strcpy, si la taille de la chaîne de destination est trop petite, on peut s'attendre à des comportements indésirables.
