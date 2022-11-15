@@ -1,19 +1,18 @@
 #include "../mini_lib.h"
 #include <fcntl.h>
-#include <stdlib.h>
-#include <stdio.h>
+#include <unistd.h>
 
 int main(int argc, char **argv) {
-  if(argc != 2)
-    return EXIT_FAILURE;
-
-  MYFILE *f;
-  
-  f = mini_fopen(argv[1], 'i');
-  if(f == NULL) {
-    // mini_perror("error");
-    return EXIT_FAILURE;
+  if(argc != 2) {
+    mini_perror("[ERROR] nombre d'arguments incorrect: ");
+    mini_exit();
   }
-  mini_fclose(f);
-  return EXIT_SUCCESS;
+
+  int fd = open(argv[1], O_RDONLY | O_CREAT | O_NONBLOCK | O_NOCTTY);
+  if(fd == -1) {
+    mini_perror("[ERROR] le fichier n'a pas pu etre cree: ");
+    mini_exit();
+  }
+  close(fd);
+  mini_exit();
 }

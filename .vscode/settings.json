@@ -5,6 +5,7 @@
     "stdlib.h": "c",
     "mini_lib.h": "c",
     "string.h": "c",
-    "errno.h": "c"
+    "errno.h": "c",
+    "wait.h": "c"
   }
 }

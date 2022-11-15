@@ -1,28 +1,23 @@
-#include <stdlib.h>
-#include <stdio.h>
-
 #include "../mini_lib.h"
 
 int main(int argc, char **argv) {
-  if(argc != 2)
-    return EXIT_FAILURE;
+  if(argc != 2) {
+    mini_perror("[ERROR] nombre d'arguments incorrect: ");
+    mini_exit();
+  }
 
-  MYFILE *f; 
-  char *filename;
-  int word_count, line_count, res, i, fla;
-  char *buffer;
-
-
-  buffer = (char*) mini_calloc(1, IOBUFFER_SIZE);
-  filename = argv[1];
-  word_count = line_count = 0;
-  res = -1;
-  f = mini_fopen(filename,  'r');
-
-  fla=0;
+  char *filename = argv[1];
+  MYFILE *f = mini_fopen(filename,  'r');
+  if(f == NULL) {
+    mini_perror("[ERROR] probleme lors de l'ouverture du fichier: ");
+    mini_exit();
+  }
+ 
+  int word_count = 0, res = -1, i;
+  char *buffer = (char*) mini_calloc(1, IOBUFFER_SIZE);
 
   while(res!=0) {
-    res = mini_fread(buffer, sizeof(char), IOBUFFER_SIZE-1, f); 
+    res = mini_fread(buffer, sizeof(char), IOBUFFER_SIZE, f); 
     for(i=0; i<res; i++){
       if (((buffer[i] == ' ') && !(buffer[i+1] == ' ')))
         word_count++;
@@ -30,15 +25,18 @@ int main(int argc, char **argv) {
         word_count++;
       else if(buffer[i] == '\n' && !(buffer[i+1] == '\n') && !(buffer[i+1] == ' '))
         word_count++;
-      // else if (buffer[i] == '\n' && !(buffer[i-1] == ' ') && !(buffer[i-1] == '\n') && !(buffer[i+1] == ' ')) {
-      //   word_count++;
-      // }
     }
   }
 
   mini_fclose(f);
-  printf("wc: %d\t%s\n", word_count, argv[1]);
+  mini_free(buffer);
+
+  char word_count_string[2048];
+  mini_itoa(word_count, word_count_string);
+  mini_printf("\twc: ");
+  mini_printf(word_count_string);
+  mini_printf("\t");
+  mini_printf(filename);
 
   mini_exit();
-  return EXIT_SUCCESS;
 }

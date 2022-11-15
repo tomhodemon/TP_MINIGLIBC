@@ -11,7 +11,7 @@ int IOBUFFER_SIZE = 2048;
 
 MYFILES_ELEMENT *myfiles_list = NULL;
 
-void _registrer_new_file(MYFILE *file) {
+void _register_new_file(MYFILE *file) {
   MYFILES_ELEMENT *new_file = (MYFILES_ELEMENT*) mini_calloc(1, sizeof(MYFILES_ELEMENT));
   new_file->file = file;
   if(myfiles_list == NULL) {
@@ -35,19 +35,19 @@ MYFILE *mini_fopen(char* file, char mode) {
     new_file->fd = open(file, O_RDONLY);
     break;
   case 'w':
-    new_file->fd = open(file, O_WRONLY | O_CREAT | O_TRUNC);
+    new_file->fd = open(file, O_WRONLY | O_CREAT | O_TRUNC | O_NONBLOCK | O_NOCTTY);
     break;
   case 'b':
-    new_file->fd = open(file, O_RDWR | O_CREAT);
+    new_file->fd = open(file, O_RDWR | O_CREAT | O_NONBLOCK | O_NOCTTY);
     break;
   case 'a':
     new_file->fd = open(file, O_WRONLY | O_CREAT | O_APPEND);
     break;
   default: 
-    printf("error flags");
-    new_file->fd = -1;
+    mini_perror("[ERROR] indefined flag: ");
+    return NULL;
   }
-  _registrer_new_file(new_file);
+  _register_new_file(new_file);
   return new_file->fd == -1 ? NULL : new_file;
 }
 
@@ -62,7 +62,7 @@ int mini_fread(void* buffer,int size_element, int number_element, MYFILE* file) 
       return 0;
    }
   
-  while(number_element-- && *((char*)file->buffer_read + file->ind_read) != NULL) {
+  while(number_element-- && *((char*)file->buffer_read + file->ind_read) != '\0') {
     *((char*)buffer++) = *((char*)file->buffer_read + file->ind_read);
     file->ind_read++;bytes_read++;
     if(file->ind_read == IOBUFFER_SIZE) {
@@ -91,7 +91,6 @@ int mini_fwrite(void* buffer,int size_element, int number_element, MYFILE* file)
       file->ind_write = 0; 
     }
   }
-
   return bytes_wrote += file->ind_write;
 }
 
@@ -105,7 +104,14 @@ int mini_fgetc(MYFILE *file) {
   char c; 
   if(file == NULL) 
     return -1;
-  if (read(file->fd, &c, 1) == 0)
+  if (mini_fread(&c, 1, sizeof(char), file) == 0)
+		return -1;
+	return c;
+}
+
+int mini_getchar(void) {
+  char c; 
+  if (read(STDIN_FILENO, &c, sizeof(char)) == -1)
 		return -1;
 	return c;
 }
@@ -113,7 +119,7 @@ int mini_fgetc(MYFILE *file) {
 int mini_fputc(MYFILE* file, char c) {
   if(file == NULL) 
     return -1;
-  return write(file->fd, &c, 1);
+  return mini_fwrite(&c, 1, sizeof(char), file);
 }
 
 int mini_fclose(MYFILE *file) {
@@ -129,20 +135,15 @@ int mini_fclose(MYFILE *file) {
 }
 
 void test_mini_io() {
-  printf("############## TEST_MINI_IO ##############\n\n");
+  mini_printf("############## TEST_MINI_IO ##############\n\n");
 
   MYFILE *f1 = mini_fopen("./file.txt", 'w');
-  MYFILE *f2 = mini_fopen("./file2.txt", 'w');
+  MYFILE *f2 = mini_fopen("./file2.txt", 'r');
 
-  
-  print_myfiles_list(myfiles_list);
-  print_malloc_list();
-  
-
+  mini_fputc(f1, 'r');
   mini_fclose(f1);
-
-  print_myfiles_list(myfiles_list);
-  print_malloc_list();
+  mini_fclose(f2);
+  mini_exit();
   // printf("head: %p\tnumber_file: %d\n", myfiles_list->head, myfiles_list->number_file);
 
   
@@ -169,5 +170,5 @@ void test_mini_io() {
   // fclose(fp);
 
  
-  printf("\n");
+  mini_printf("\n");
 }

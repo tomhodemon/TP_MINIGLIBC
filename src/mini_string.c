@@ -1,6 +1,5 @@
 #include <unistd.h>
 #include <errno.h>
-#include <stdio.h>
 #include "mini_lib.h"
 
 char *buffer = NULL;
@@ -59,7 +58,7 @@ void mini_printf(char* s) {
 }
 
 int mini_scanf(char *buffer, int size_buffer) {
-  return read(STDIN_FILENO, buffer, size_buffer); 
+  return read(0, buffer, size_buffer); 
 }
 
 void mini_perror(char *message) {
@@ -71,6 +70,9 @@ void mini_perror(char *message) {
   *(error + message_len - 1) = *s;
   *(error + message_len) = '\0';
   mini_printf(error);
+  mini_printf("\n");
+  mini_free(error);
+  return;
  }
 
 void rev(char *s) {
@@ -96,4 +98,12 @@ void mini_itoa(int n, char *s) {
     s[i++] = '-';
   s[i] = '\0';
   rev(s);
+}
+
+int mini_atoi(const char *s) {
+  int a = 0;
+  for (int i = 0  ; i<mini_strlen(s); i++) {
+    a = (int)(s[i] - 48) + a * 10;
+  }
+  return a;
 }

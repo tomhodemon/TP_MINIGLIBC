@@ -1,6 +1,8 @@
 #ifndef MINI_LIB_FILE
 #define MINI_LIB_FILE
 
+#define NULL ((void *)0)
+
 // gestion de la memoire
 typedef struct malloc_element{
   void* buffer;
@@ -29,6 +31,7 @@ extern int mini_strcmp(const char*, const char*);
 extern int mini_scanf(char*, int);
 extern void mini_perror(char*);
 extern void mini_itoa(int, char*);
+extern int mini_atoi(const char *s);
 
 
 // gestion des Entrees/Sorties
@@ -47,9 +50,10 @@ extern int mini_fread(void*,int, int, MYFILE*); // faire erreurs
 extern int mini_fwrite(void*,int, int, MYFILE*); // faire erreurs (si file descriptor est correct pour ecriture)
 extern int mini_fflush(MYFILE*);
 extern int mini_fgetc(MYFILE *);
+extern int mini_getchar(void);
 extern int mini_fputc(MYFILE*, char);
 extern int mini_fclose(MYFILE*);
-extern void _register_new_file(MYFILE *);
+void _register_new_file(MYFILE *);
 
 // linked_list
 typedef struct MYFILES_ELEMENT{

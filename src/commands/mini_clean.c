@@ -1,18 +1,19 @@
-#include <stdio.h>
-#include <stdlib.h>
-
 #include "../mini_lib.h"
+#include <fcntl.h>
+#include <unistd.h>
 
 int main(int argc, char **argv) {
-  if(argc != 2) 
-    return EXIT_FAILURE;
+  if(argc != 2) {
+    mini_perror("[ERROR] nombre d'arguments incorrect: ");
+    mini_exit();
+  }
 
-  MYFILE *f;
-  char *filename;
+  int fd = open(argv[1], O_WRONLY | O_CREAT | O_TRUNC | O_NONBLOCK | O_NOCTTY);
+  if(fd == -1) {
+    mini_perror("[ERROR] probleme lors de l'ouverture du fichier: ");
+    mini_exit();
+  }
 
-  filename = argv[1];
-  f = mini_fopen(filename, 'w');
-  mini_fclose(f);
+  close(fd);
   mini_exit();
-  return EXIT_SUCCESS;
 }
