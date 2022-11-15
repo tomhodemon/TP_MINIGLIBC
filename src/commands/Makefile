@@ -1,13 +1,13 @@
 C=gcc
 CFLAGS=-Wall
 LDFLAGS=
-EXEC=mini_tail
-SRC=../mini_string.c ../mini_memory.c ../mini_io.c ../linked_list.c ./mini_tail.c
+EXEC=mini_shell
+SRC=../mini_string.c ../mini_memory.c ../mini_io.c ../linked_list.c ../debug.c ./mini_shell.c
 OBJ= $(SRC:.c=.o)
 
 all: $(EXEC)
 
-mini_tail: $(OBJ)
+mini_shell: $(OBJ)
 	$(CC) -o $@ $^ $(LDFLAGS)
 
 %.o: %.c

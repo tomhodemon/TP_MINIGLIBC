@@ -1,5 +1,7 @@
-#include "mini_lib.h"
+#include <stdlib.h>
+#include <stdio.h>
 
+#include "../mini_lib.h"
 
 int mini_atoi(const char *s) {
   int a = 0;
@@ -7,6 +9,27 @@ int mini_atoi(const char *s) {
       a = (int)(s[i] - 48) + a * 10;
   }
   return a;
+}
+
+int line_count(char *filename) {
+  MYFILE *f = mini_fopen(filename, 'r');
+  if(f == NULL) {
+    printf("probleme ouverture de fichier");
+    return 1;
+  }
+
+  int line_count = 0;
+  char *b = (char*) mini_calloc(1, BUF_SIZE);
+  int res = -1;
+
+  while(res!=0) {
+    res = mini_fread(b, sizeof(char), BUF_SIZE, f);
+    for(int i=0; i<res; i++)
+      if(b[i] == '\n') line_count++;
+  }
+  mini_free(b);
+  mini_fclose(f);
+  return line_count;
 }
 
 int main(int argc, char **argv) {
@@ -19,36 +42,41 @@ int main(int argc, char **argv) {
     return 1;
   }
 
+  int n = mini_atoi(argv[2]);
+
   char *filename = argv[3];
+
+  int number_line = line_count(filename);
+
   MYFILE *f = mini_fopen(filename, 'r');
   if(f == NULL) {
     printf("probleme ouverture de fichier");
     return 1;
   }
 
-  int n = mini_atoi(argv[2]);
- 
-  int current_number_line = 0;
-  int BUF_SIZE = 1024;
-  char *buffer = (char*) mini_calloc(1,BUF_SIZE);
-  int count;
+  int hook_line = number_line - n + 1;
+  if(hook_line < 0) hook_line = 0;  
 
-  while((count = mini_fread(buffer, sizeof(char), BUF_SIZE, f)) != 0) {
-    for(int i=0; i<strlen(buffer); i++) {
-      if(buffer[i] == '\n') current_number_line++;
-      if(current_number_line == n) {
-        char *partial = (char*) mini_calloc(1,BUF_SIZE);
-        strncpy(partial, buffer, i);
-        mini_printf(partial); 
-        mini_free(partial);
-        mini_exit();
-      }
-      
+  char *b = (char*) mini_calloc(1, BUF_SIZE);
+  int res = -1;
+  int i;
+
+  while(res!=0) {
+  res = mini_fread(b, sizeof(char), BUF_SIZE, f);
+    for(i=0; i<res; i++) {
+      if(b[i] == '\n') hook_line--;
+      if(hook_line == 0) break;
     }
-   mini_printf(buffer); 
+    if(hook_line == 0) break;
   }
-  
-  mini_free(buffer);
-  mini_fclose(f);
+
+  mini_printf(b+i);
+  while((res = mini_fread(b, sizeof(char), BUF_SIZE, f)) != 0) {
+    mini_printf(b);
+  }
+
+  mini_fclose(f);  
+  mini_free(b);  
+  mini_exit();
   return 0;
 }

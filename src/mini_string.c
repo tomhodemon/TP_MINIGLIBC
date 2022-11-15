@@ -21,6 +21,20 @@ int mini_strcpy(char *dest, const char *src) {
   return count;
 }
 
+char* mini_strncpy(char* dest, const char* src, int n) {
+  if (dest == NULL) return NULL;
+
+  char* ptr = dest;
+
+  while (*src && n--) {
+    *dest = *src;
+    dest++;
+    src++;
+  }
+  *dest = '\0';
+  return ptr;
+}
+
 int mini_strcmp(const char* s1, const char* s2) {
   if(mini_strlen(s1) != mini_strlen(s2)) return 1;
   while(*s1 != *s2) return 1;
@@ -45,7 +59,7 @@ void mini_printf(char* s) {
 }
 
 int mini_scanf(char *buffer, int size_buffer) {
-  return read(STDIN_FILENO, buffer, size_buffer);
+  return read(STDIN_FILENO, buffer, size_buffer); 
 }
 
 void mini_perror(char *message) {

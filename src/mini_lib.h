@@ -23,8 +23,8 @@ extern int ind;
 
 extern void mini_printf(char*);
 extern int mini_strcpy(char*, const char*);
+extern char* mini_strncpy(char*, const char*, int);
 extern int mini_strlen(const char*);
-extern void mini_bzero(void*, int, int);
 extern int mini_strcmp(const char*, const char*);
 extern int mini_scanf(char*, int);
 extern void mini_perror(char*);

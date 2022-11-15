@@ -7,6 +7,8 @@
 malloc_element* malloc_list = NULL;
 char *buffer;
 
+void mini_bzero(void*, int);
+
 void* mini_calloc(int number_element, int size_element) {
   if(number_element < 0 || size_element < 0) {
     mini_perror("Error argument in mini_calloc");
@@ -20,7 +22,7 @@ void* mini_calloc(int number_element, int size_element) {
     mini_perror("Error sbrk in mini_calloc");
     mini_exit();
   }
-  mini_bzero(new_malloc_element->buffer, number_element, size_element);
+  mini_bzero(new_malloc_element->buffer, size);
   new_malloc_element->size = size;
   new_malloc_element->status = 1;
   new_malloc_element->next_malloc = NULL;
@@ -67,9 +69,13 @@ void mini_exit(void) {
   _exit(0);
 }
 
-void mini_bzero(void *s, int number_element, int size_element) {
-  for(int i=0; i<number_element; i++) {
-    s = (void *)'\0';
-    s += size_element;
-  }
+void *mini_memset (void *dest, int val, int len) {
+  unsigned char *ptr = (unsigned char*)dest;
+  while (len-- > 0)
+    *ptr++ = val;
+  return dest;
+}
+
+void mini_bzero(void *to, int count) {
+  mini_memset(to, 0, count);
 }
