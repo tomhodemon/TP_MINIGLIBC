@@ -15,24 +15,17 @@ int main(int argc, char **argv) {
     mini_exit();
   }
  
-  int word_count = 0, res = -1, i;
-  char *buffer = (char*) mini_calloc(1, IOBUFFER_SIZE);
-  
-  while(res!=0) {
-    res = mini_fread(buffer, sizeof(char), IOBUFFER_SIZE, f); 
-    for(i=0; i<res; i++){
-      if (((buffer[i] == ' ') && !(buffer[i+1] == ' ')))
-        word_count++;
-      else if(!(buffer[i] == ' ') && !(buffer[i] == '\n') && (i+1) == res)
-        word_count++;
-      else if(buffer[i] == '\n' && !(buffer[i+1] == '\n') && !(buffer[i+1] == ' '))
-        word_count++;
-    }
+  char c; int word_count = 0; int in_word = 0;
+  while((c = (char)mini_fgetc(f)) != -1 && (c == ' ' || c == '\n')) ;
+
+  while(c != -1) {
+    if(c != ' ' && c != '\n') in_word = 1;
+    else if(in_word) in_word = 0, word_count++;
+    c = (char)mini_fgetc(f);
   }
+  if(in_word) word_count++;
 
   mini_fclose(f);
-  mini_free(buffer);
-
   char word_count_string[2048];
   mini_itoa(word_count, word_count_string);
   mini_printf("\twc: ");

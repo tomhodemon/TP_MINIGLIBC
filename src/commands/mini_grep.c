@@ -1,70 +1,11 @@
-#include "mini_lib.h"
+#include "../mini_lib.h"
 #include <stdio.h>
 
-#include <stdlib.h>
-#include <errno.h>
-#include <limits.h>
-
-ssize_t getdelim(char **lineptr, size_t *n, int delim, MYFILE *stream) {
-    char *cur_pos, *new_lineptr;
-    size_t new_lineptr_len;
-    int c;
-
-    if (lineptr == NULL || n == NULL || stream == NULL) {
-        errno = EINVAL;
-        return -1;
-    }
-
-    if (*lineptr == NULL) {
-        *n = 128; /* init len */
-        if ((*lineptr = (char *)malloc(*n)) == NULL) {
-            errno = ENOMEM;
-            return -1;
-        }
-    }
-
-    cur_pos = *lineptr;
-    for (;;) {
-        c = mini_fgetc(stream);
-
-        if ((c == EOF && cur_pos == *lineptr))
-            return -1;
-
-        if (c == EOF)
-            break;
-
-        if ((*lineptr + *n - cur_pos) < 2) {
-            if (SSIZE_MAX / 2 < *n) {
-#ifdef EOVERFLOW
-                errno = EOVERFLOW;
-#else
-                errno = ERANGE; /* no EOVERFLOW defined */
-#endif
-                return -1;
-            }
-            new_lineptr_len = *n * 2;
-
-            if ((new_lineptr = (char *)realloc(*lineptr, new_lineptr_len)) == NULL) {
-                errno = ENOMEM;
-                return -1;
-            }
-            cur_pos = new_lineptr + (cur_pos - *lineptr);
-            *lineptr = new_lineptr;
-            *n = new_lineptr_len;
-        }
-
-        *cur_pos++ = (char)c;
-
-        if (c == delim)
-            break;
-    }
-
-    *cur_pos = '\0';
-    return (ssize_t)(cur_pos - *lineptr);
-}
-
-ssize_t getline(char **lineptr, size_t *n, MYFILE *stream) {
-    return getdelim(lineptr, n, '\n', stream);
+int mini_getline(char *line, int size, MYFILE *f) {
+    char c; int i = 0;
+    while((c = (char)mini_fgetc(f))!=-1 && c!='\n' && i<size) *(line+i) = c, i++;
+    *(line+i) = '\0';
+    return i;
 }
 
 int main(int argc, char **argv) {
@@ -73,6 +14,8 @@ int main(int argc, char **argv) {
     mini_exit();
   }
 
+char word[100];
+    mini_strcpy(word, argv[1]);
   char *filename = argv[2];
   MYFILE *f = mini_fopen(filename, 'r');
   if(f == NULL) {
@@ -80,8 +23,9 @@ int main(int argc, char **argv) {
     mini_exit();
   }
 
-  char b[2048];
-  getline(b, 2048, f);
-
-  return 0;
+  char line[2048]; int res = -1;
+  while((res = mini_getline(line, 2048, f)) != 0) {
+  }
+    mini_fclose(f);
+    return 0;
 }

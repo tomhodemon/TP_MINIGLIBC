@@ -7,17 +7,18 @@
 #include <stdio.h>
 #include "../mini_lib.h"
 
-void parse_args(char *prompt, char **argv) {
+void parse_args(char *prompt, char **args) {
   int len_prompt = mini_strlen(prompt);
   prompt[len_prompt-1] = '\0';
   while (*prompt != '\0') {
     while(*prompt == ' ' || *prompt == '\t' || *prompt == '\n')
       *prompt++ = '\0';
-    *argv++ = prompt;
+    *args++ = prompt;
     while(*prompt != '\0' && *prompt != ' ' && *prompt != '\t' && *prompt != '\n') 
       prompt++;
   }
-  *argv = (char*)'\0';
+  *args = (char*)'\0';
+  return;
 }
 
 void  execute(char **args) {
@@ -84,12 +85,12 @@ void  execute(char **args) {
 }
      
 int main(int argc, char **argv) {
-  char  prompt[1024];
+  char  prompt[BUF_SIZE];
   char  *args[64];
      
   while (1) {
     mini_printf("me@term # \n");
-    mini_scanf(prompt, 1024);
+    mini_scanf(prompt, BUF_SIZE);
     if(mini_strlen(prompt) >= 1){
       parse_args(prompt, args);
       if (mini_strcmp(args[0], "exit") == 0)
