@@ -1,9 +1,6 @@
 #include <stdio.h>
 #include "mini_lib.h"
 
-malloc_element *malloc_list;
-MYFILES_ELEMENT *myfiles_list;
-
 void print_malloc_list(void) {
   printf("[MALLOC_LIST] head: %p - size: %d (free space: %d)\n", malloc_list, get_size_malloc_list(), get_number_free_space_malloc_list()); 
   malloc_element *current = malloc_list;

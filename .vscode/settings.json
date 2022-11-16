@@ -7,6 +7,7 @@
     "string.h": "c",
     "errno.h": "c",
     "wait.h": "c",
-    "unistd.h": "c"
+    "unistd.h": "c",
+    "locale.h": "c"
   }
 }

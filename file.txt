@@ -1,9 +1,5 @@
-
-36%
-
-OFF
-
-Learn to code by doing. Try hands-on C Programming with Programiz PRO. Claim Discount
+Hello World!
+arn to code by doing. Try hands-on C Programming with Programiz PRO. Claim Discount
 
 Programiz
 Courses

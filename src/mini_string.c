@@ -1,9 +1,10 @@
 #include <errno.h>
 #include <locale.h>
+#include <unistd.h>
 #include "mini_lib.h"
 
 int BUF_SIZE = 1024;
-char *buffer;
+char *buffer = NULL;
 int ind = -1;
 
 int mini_strlen(const char* s) {
@@ -35,7 +36,7 @@ char* mini_strncpy(char* dest, const char* src, int n) {
 }
 
 int mini_strcmp(const char* s1, const char* s2) {
-  for( ; *s1 == *s2 ; *s2++ , *s1++)
+  for( ; *s1 == *s2 ; s2++ , s1++)
     if(*s1 == '\0') return 0;
   return *s1 - *s2;
 }
@@ -49,17 +50,16 @@ void mini_printf(char* s) {
     mini_strcpy(buffer + ind, s);
     ind++;
     if (ind == BUF_SIZE || *s == '\n') {
-      write(1, buffer, ind);
+      write(STDOUT_FILENO, buffer, ind);
       
       ind = 0;
     }
     s++;
   }
-
 }
 
 int mini_scanf(char *b, int size_buffer) {
-  return read(0, b, size_buffer-1); 
+  return read(STDIN_FILENO, b, size_buffer-1); 
 }
 
 void mini_perror(char *message) {

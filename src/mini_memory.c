@@ -1,7 +1,7 @@
 #include <unistd.h>
-#include <stdio.h>
+#include <locale.h>
+
 #include <stdlib.h>
-#include <string.h>
 #include "mini_lib.h"
 
 malloc_element* malloc_list = NULL;
@@ -65,7 +65,6 @@ void mini_exit(void) {
   write(1, buffer, ind);
   ind = 0;
   mini_free(buffer);
-
 
   
   mini_printf("\n############ [DEBUG] MINI_EXIT #############\n");
