@@ -1,5 +1,6 @@
 #include "../mini_lib.h"
 #include <locale.h>
+#include <stdio.h>
 
 int main(int argc, char **argv) {
   if(argc != 2) {
@@ -16,7 +17,7 @@ int main(int argc, char **argv) {
  
   int word_count = 0, res = -1, i;
   char *buffer = (char*) mini_calloc(1, IOBUFFER_SIZE);
-
+  
   while(res!=0) {
     res = mini_fread(buffer, sizeof(char), IOBUFFER_SIZE, f); 
     for(i=0; i<res; i++){
@@ -38,6 +39,5 @@ int main(int argc, char **argv) {
   mini_printf(word_count_string);
   mini_printf("\t");
   mini_printf(filename);
-
   mini_exit();
 }

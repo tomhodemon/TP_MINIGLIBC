@@ -1,1 +1,137 @@
-jennesaisa s
+
+36%
+
+OFF
+
+Learn to code by doing. Try hands-on C Programming with Programiz PRO. Claim Discount
+
+Programiz
+Courses
+Tutorials
+Examples
+
+Search tutorials and examples
+Try PRO for FREE
+
+<string.h> Functions
+strcat()
+strcmp()
+strcpy()
+strlen()
+Related Topics
+C strcat()
+C strcpy()
+C Program to Sort Elements in Lexicographical Order (Dictionary Order)
+String Manipulations In C Programming Using Library Functions
+C Programming Strings
+C iscntrl()
+ads via Carbon
+SonarLint in the IDE helps you find & fix bugs and security issues from the moment you start writing code.
+ADS VIA CARBON
+C strcmp()
+In this tutorial, you will learn to compare two strings using the strcmp() function.
+
+The strcmp() compares two strings character by character. If the strings are equal, the function returns 0.
+
+C strcmp() Prototype
+The function prototype of strcmp() is:
+
+int strcmp (const char* str1, const char* str2);
+strcmp() Parameters
+The function takes two parameters:
+
+str1 - a string
+str2 - a string
+Return Value from strcmp()
+Return Value	Remarks
+0	if strings are equal
+>0	if the first non-matching character in str1 is greater (in ASCII) than that of str2.
+<0	if the first non-matching character in str1 is lower (in ASCII) than that of str2.
+The strcmp() function is defined in the string.h header file.
+
+Example: C strcmp() function
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+  char str1[] = "abcd", str2[] = "abCd", str3[] = "abcd";
+  int result;
+
+  // comparing strings str1 and str2
+  result = strcmp(str1, str2);
+  printf("strcmp(str1, str2) = %d\n", result);
+
+  // comparing strings str1 and str3
+  result = strcmp(str1, str3);
+  printf("strcmp(str1, str3) = %d\n", result);
+
+  return 0;
+}
+Output
+
+strcmp(str1, str2) = 1
+strcmp(str1, str3) = 0
+In the program,
+
+strings str1 and str2 are not equal. Hence, the result is a non-zero integer.
+strings str1 and str3 are equal. Hence, the result is 0.
+Share on:
+Did you find this article helpful?
+Related Library Functions
+C Library Function
+
+C strcmp()
+
+C Library Function
+
+C strcat()
+
+C Library Function
+
+C strcpy()
+
+C Library Function
+
+C strlen()
+
+
+Join our newsletter for the latest updates.
+Enter Email Address*
+Join
+
+
+Tutorials
+Python 3 Tutorial
+JavaScript Tutorial
+SQL Tutorial
+C Tutorial
+Java Tutorial
+Kotlin Tutorial
+C++ Tutorial
+Swift Tutorial
+C# Tutorial
+Go Tutorial
+DSA Tutorial
+Examples
+Python Examples
+JavaScript Examples
+C Examples
+Java Examples
+Kotlin Examples
+C++ Examples
+Company
+Change Consent
+About
+Advertising
+Privacy Policy
+Terms & Conditions
+Contact
+Blog
+Youtube
+Apps
+Learn Python
+Learn C Programming
+Learn Java
+© Parewa Labs Pvt. Ltd. All rights reserved.
+
+   

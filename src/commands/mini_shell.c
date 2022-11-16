@@ -7,13 +7,15 @@
 #include <stdio.h>
 #include "../mini_lib.h"
 
-void parse_args(char *line, char **argv) {
-  while (*line != '\0') {
-    while(*line == ' ' || *line == '\t' || *line == '\n')
-      *line++ = '\0';
-    *argv++ = line;
-    while(*line != '\0' && *line != ' ' && *line != '\t' && *line != '\n') 
-      line++;
+void parse_args(char *prompt, char **argv) {
+  int len_prompt = mini_strlen(prompt);
+  prompt[len_prompt-1] = '\0';
+  while (*prompt != '\0') {
+    while(*prompt == ' ' || *prompt == '\t' || *prompt == '\n')
+      *prompt++ = '\0';
+    *argv++ = prompt;
+    while(*prompt != '\0' && *prompt != ' ' && *prompt != '\t' && *prompt != '\n') 
+      prompt++;
   }
   *argv = (char*)'\0';
 }
@@ -70,7 +72,7 @@ void  execute(char **args) {
       }
     } else {
       if(execvp(*args, args) < 0) {
-        mini_perror("*** ERROR: exec failed: ");
+        mini_perror("[ERROR] commande inconnue: ");
         mini_exit();
       }
     }  
@@ -86,8 +88,8 @@ int main(int argc, char **argv) {
   char  *args[64];
      
   while (1) {
-    printf("me@term # ");
-    gets(prompt);
+    mini_printf("me@term # \n");
+    mini_scanf(prompt, 1024);
     if(mini_strlen(prompt) >= 1){
       parse_args(prompt, args);
       if (mini_strcmp(args[0], "exit") == 0)
