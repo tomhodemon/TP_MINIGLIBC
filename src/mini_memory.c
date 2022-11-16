@@ -1,7 +1,5 @@
-#include <unistd.h>
 #include <locale.h>
-
-#include <stdlib.h>
+#include <unistd.h>
 #include "mini_lib.h"
 
 malloc_element* malloc_list = NULL;

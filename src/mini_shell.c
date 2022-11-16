@@ -1,11 +1,7 @@
-
-#include <stdio.h>
-#include <string.h>
 #include <unistd.h>
 #include <sys/wait.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include "../mini_lib.h"
+#include <locale.h>
+#include "mini_lib.h"
 
 void parse_args(char *prompt, char **args) {
   int len_prompt = mini_strlen(prompt);
@@ -41,14 +37,12 @@ void  execute(char **args) {
       }
     } else if(!mini_strcmp("echo", *args)) {
       if(execvp("./mini_echo", args) < 0) {
-         printf("hhh\n");
         mini_perror("*** ERROR: exec failed: ");
         mini_exit();
       }
     } else if(!mini_strcmp("clean", *args)) {
       if(execvp("./mini_clean", args) < 0) {
         mini_perror("*** ERROR: exec failed: ");
-        
         mini_exit();
       }
     } else if(!mini_strcmp("cp", *args)) {

@@ -1,6 +1,5 @@
-#include "../mini_lib.h"
 #include <locale.h>
-#include <stdio.h>
+#include "mini_lib.h"
 
 int line_count(char *filename) {
   MYFILE *f = mini_fopen(filename, 'r');

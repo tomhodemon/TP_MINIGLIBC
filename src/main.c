@@ -5,4 +5,5 @@ int main(int argc, char **argv) {
   test_mini_string();
   test_mini_io();
   mini_exit();
+  return 0;
 }
