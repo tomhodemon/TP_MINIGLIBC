@@ -20,7 +20,6 @@ void _register_new_file(MYFILE *file) {
     new_file->next_file = myfiles_list;
   }
   myfiles_list = new_file;
-  
   return;
 }
 
@@ -132,43 +131,4 @@ int mini_fclose(MYFILE *file) {
     return -1;
   }
   return 0;
-}
-
-void test_mini_io() {
-  mini_printf("############## TEST_MINI_IO ##############\n\n");
-
-  MYFILE *f1 = mini_fopen("./file.txt", 'w');
-  MYFILE *f2 = mini_fopen("./file2.txt", 'r');
-
-  mini_fputc(f1, 'r');
-  mini_fclose(f1);
-  mini_fclose(f2);
-  mini_exit();
-  // printf("head: %p\tnumber_file: %d\n", myfiles_list->head, myfiles_list->number_file);
-
-  
-  // int number_element = 2;
-  // void *buffer = mini_calloc(number_element + 1, sizeof(char));
-
-  // mini_fread(buffer, sizeof(char), number_element, f);
-  // mini_fread(buffer, sizeof(char), number_element, f);
-  // assert(mini_fread(buffer, sizeof(char), number_element, f) == 2);
-  // mini_printf((char*)buffer);
-
-  
-  // mini_free(f->buffer_read);
-  // mini_free(f->buffer_write);
-
-  // mini_free(f);
-
-  // FILE *fp; 
-  // fp = fopen("./file.txt", "a");
-  // char *b_ = "hello";
-  // fwrite(b_, sizeof(char), 2, fp);
-  // printf("\n");
-  // fflush(fp);
-  // fclose(fp);
-
- 
-  mini_printf("\n");
 }

@@ -1,8 +1,6 @@
 #ifndef MINI_LIB_FILE
 #define MINI_LIB_FILE
 
-#define NULL ((void *)0)
-
 // gestion de la memoire
 typedef struct malloc_element{
   void* buffer;
@@ -70,8 +68,8 @@ extern void delete_element_myfiles_list(MYFILE*);
 extern int get_number_free_space_malloc_list(void);
 extern int get_size_malloc_list(void);
 extern void print_malloc_list(void);
-extern void print_myfiles_list(MYFILES_ELEMENT*);
-extern int get_size_myfiles_list(MYFILES_ELEMENT*);
+extern void print_myfiles_list(void);
+extern int get_size_myfiles_list(void);
 
 extern void test_mini_memory(void);
 extern void test_mini_string(void);

@@ -21,7 +21,5 @@ int main(int argc, char **argv) {
   while((count = mini_fread(buffer, sizeof(char), BUF_SIZE, f)) != 0) {
    
   }
-
-
   return 0;
 }

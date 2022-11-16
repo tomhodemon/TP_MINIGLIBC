@@ -1,9 +1,9 @@
-#include <unistd.h>
 #include <errno.h>
+#include <locale.h>
 #include "mini_lib.h"
 
-char *buffer = NULL;
 int BUF_SIZE = 1024;
+char *buffer;
 int ind = -1;
 
 int mini_strlen(const char* s) {
@@ -49,16 +49,15 @@ void mini_printf(char* s) {
     mini_strcpy(buffer + ind, s);
     ind++;
     if (ind == BUF_SIZE || *s == '\n') {
-      write(STDOUT_FILENO, buffer, ind);
+      write(1, buffer, ind);
       ind = 0;
     }
     s++;
   }
-  mini_free(buffer);
 }
 
-int mini_scanf(char *buffer, int size_buffer) {
-  return read(0, buffer, size_buffer); 
+int mini_scanf(char *b, int size_buffer) {
+  return read(0, b, size_buffer-1); 
 }
 
 void mini_perror(char *message) {

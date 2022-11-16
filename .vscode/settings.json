@@ -6,6 +6,7 @@
     "mini_lib.h": "c",
     "string.h": "c",
     "errno.h": "c",
-    "wait.h": "c"
+    "wait.h": "c",
+    "unistd.h": "c"
   }
 }

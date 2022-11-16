@@ -18,23 +18,6 @@ void parse_args(char *line, char **argv) {
   *argv = '\0';
 }
 
-// char *mini_gets(char *buf) {
-// 	int c;
-// 	char *s;
-//   flockfile(stdin);
-// 	for (s = buf; (c = getchar()) != '\n';)
-// 		if (c == -1)
-// 			if (s == buf) {
-// 				return (NULL);
-// 			} else
-// 				break;
-// 		else
-// 			*s++ = c;
-// 	*s = '\0';
-//   funlockfile(stdin);
-// 	return (buf);
-// } 
-
 void  execute(char **args) {
   pid_t pid;
   int status;

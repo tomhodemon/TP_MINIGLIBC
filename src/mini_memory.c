@@ -5,7 +5,6 @@
 #include "mini_lib.h"
 
 malloc_element* malloc_list = NULL;
-char *buffer;
 
 void mini_bzero(void*, int);
 
@@ -29,8 +28,9 @@ void* mini_calloc(int number_element, int size_element) {
 
   if(malloc_list == NULL) {
     malloc_list = new_malloc_element;
-  } else {    
+  } else {
     malloc_element *current = malloc_list;
+    // printf("curr_size: %d\n", current->size);
     while(!(current->next_malloc == NULL || (current->size >= size && current->status == 0))) {
       current = current->next_malloc;
     }
@@ -63,7 +63,13 @@ void mini_exit(void) {
     current_file = current_file->next_file;
   }
   // gestion des chaines de caracteres
-  write(STDOUT_FILENO, buffer, ind);
+  write(1, buffer, ind);
+  mini_free(buffer);
+
+  
+  mini_printf("\n############ [DEBUG] MINI_EXIT #############\n");
+  mini_printf("on s'assure que tous les espaces memoires ont ete libere avant de quitter le programme\n\n");
+  print_malloc_list();
 
   // gestion de la memoire
   _exit(0);
