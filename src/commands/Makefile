@@ -2,7 +2,7 @@ C=gcc
 CFLAGS=-Wall
 LDFLAGS=
 EXEC=$(f)
-SRC=../mini_string.c ../mini_memory.c ../mini_io.c ../linked_list.c ../debug.c ./$(EXEC).c
+SRC=../mini_string.c ../mini_memory.c ../mini_io.c ../linked_list.c ../debug.c ./$(f).c
 OBJ= $(SRC:.c=.o)
 
 all: $(EXEC)

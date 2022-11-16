@@ -108,3 +108,11 @@ int mini_atoi(const char *s) {
   }
   return a;
 }
+
+int mini_getline(char *line, int size, MYFILE *f) {
+  char c; int i = 0;
+  while((c = (char)mini_fgetc(f))!=-1 && c!='\n' && i<size) *(line+i) = c, i++;
+  if(i==0 && c=='\n') i++, *(line) = c;
+  *(line+i) = '\0';
+  return i;
+}

@@ -16,10 +16,10 @@ int main(int argc, char **argv) {
   }
  
   char c; int word_count = 0; int in_word = 0;
-  while((c = (char)mini_fgetc(f)) != -1 && (c == ' ' || c == '\n')) ;
+  while((c=(char)mini_fgetc(f))!=-1 && (c==' ' || c=='\n')) ;
 
   while(c != -1) {
-    if(c != ' ' && c != '\n') in_word = 1;
+    if(c!=' ' && c != '\n') in_word = 1;
     else if(in_word) in_word = 0, word_count++;
     c = (char)mini_fgetc(f);
   }

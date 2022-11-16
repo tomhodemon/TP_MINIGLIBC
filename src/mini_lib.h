@@ -1,7 +1,6 @@
 #ifndef MINI_LIB_FILE
 #define MINI_LIB_FILE
 
-// gestion de la memoire
 typedef struct malloc_element{
   void* buffer;
   int size;
@@ -9,6 +8,21 @@ typedef struct malloc_element{
   struct malloc_element *next_malloc;
 } malloc_element;
 
+
+typedef struct{
+  int fd;
+  void *buffer_read;
+  void *buffer_write; 
+  int ind_read;
+  int ind_write;
+} MYFILE;
+
+typedef struct MYFILES_ELEMENT{
+  MYFILE *file;
+  struct MYFILES_ELEMENT *next_file;
+} MYFILES_ELEMENT;
+
+// gestion de la memoire
 extern malloc_element* malloc_list;
 
 extern void* mini_calloc(int, int);
@@ -30,17 +44,10 @@ extern int mini_scanf(char*, int);
 extern void mini_perror(char*);
 extern void mini_itoa(int, char*);
 extern int mini_atoi(const char *s);
+extern int mini_getline(char*, int, MYFILE*);
 
 
 // gestion des Entrees/Sorties
-typedef struct{
-  int fd;
-  void *buffer_read;
-  void *buffer_write; 
-  int ind_read;
-  int ind_write;
-} MYFILE;
-
 extern int IOBUFFER_SIZE;
 
 extern MYFILE *mini_fopen(char*, char);
@@ -54,11 +61,6 @@ extern int mini_fclose(MYFILE*);
 void _register_new_file(MYFILE *);
 
 // linked_list
-typedef struct MYFILES_ELEMENT{
-  MYFILE *file;
-  struct MYFILES_ELEMENT *next_file;
-} MYFILES_ELEMENT;
-
 extern MYFILES_ELEMENT *myfiles_list;
 
 extern void _registrer_new_file(MYFILE*);

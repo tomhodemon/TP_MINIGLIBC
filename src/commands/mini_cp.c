@@ -1,4 +1,5 @@
 #include "../mini_lib.h"
+#include <locale.h>
 
 int main(int argc, char **argv) {
   if(argc != 3) {

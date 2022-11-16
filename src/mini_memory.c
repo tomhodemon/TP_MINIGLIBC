@@ -67,9 +67,9 @@ void mini_exit(void) {
   mini_free(buffer);
 
   
-  mini_printf("\n############ [DEBUG] MINI_EXIT #############\n");
-  mini_printf("on s'assure que tous les espaces memoires ont ete libere avant de quitter le programme\n\n");
-  print_malloc_list();
+  // mini_printf("\n############ [DEBUG] MINI_EXIT #############\n");
+  // mini_printf("on s'assure que tous les espaces memoires ont ete libere avant de quitter le programme\n\n");
+  // print_malloc_list();
 
   // gestion de la memoire
   _exit(0);

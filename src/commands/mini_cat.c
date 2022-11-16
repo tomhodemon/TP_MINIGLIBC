@@ -23,7 +23,6 @@ int main(int argc, char **argv) {
   while((count = mini_fread(buffer, sizeof(char), BUF_SIZE, f)) != 0) {
     mini_printf(buffer);
   }
-
   mini_fclose(f);
   mini_free(buffer);
   mini_exit();
