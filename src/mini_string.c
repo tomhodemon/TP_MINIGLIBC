@@ -35,9 +35,9 @@ char* mini_strncpy(char* dest, const char* src, int n) {
 }
 
 int mini_strcmp(const char* s1, const char* s2) {
-  if(mini_strlen(s1) != mini_strlen(s2)) return 1;
-  while(*s1 != *s2) return 1;
-  return 0;
+  for( ; *s1 == *s2 ; *s2++ , *s1++)
+    if(*s1 == '\0') return 0;
+  return *s1 - *s2;
 }
 
 void mini_printf(char* s) {
@@ -50,10 +50,12 @@ void mini_printf(char* s) {
     ind++;
     if (ind == BUF_SIZE || *s == '\n') {
       write(1, buffer, ind);
+      
       ind = 0;
     }
     s++;
   }
+
 }
 
 int mini_scanf(char *b, int size_buffer) {

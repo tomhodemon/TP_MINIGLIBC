@@ -1,4 +1,6 @@
 #include "../mini_lib.h"
+#include <locale.h>
+#include <stdio.h>
 
 int line_count(char *filename) {
   MYFILE *f = mini_fopen(filename, 'r');
@@ -8,15 +10,15 @@ int line_count(char *filename) {
   }
 
   int line_count = 0;
-  char *buffer = (char*) mini_calloc(1, BUF_SIZE);
+  char *b = (char*) mini_calloc(1, BUF_SIZE);
   int res = -1;
 
   while(res!=0) {
-    res = mini_fread(buffer, sizeof(char), BUF_SIZE, f);
+    res = mini_fread(b, sizeof(char), BUF_SIZE, f);
     for(int i=0; i<res; i++)
-      if(buffer[i] == '\n') line_count++;
+      if(b[i] == '\n') line_count++;
   }
-  mini_free(buffer);
+  mini_free(b);
   mini_fclose(f);
   return line_count;
 }
@@ -41,29 +43,29 @@ int main(int argc, char **argv) {
     mini_exit();
   }
 
-  int n = mini_atoi(argv[2]);
-
-  int hook_line = number_line - n ;
-  if(hook_line < 0) hook_line = 0;  
-
   char *b = (char*) mini_calloc(1, BUF_SIZE);
   int res = -1;
-  int i;
 
-  while(res!=0) {
-  res = mini_fread(b, sizeof(char), BUF_SIZE, f);
-    for(i=0; i<res; i++) {
-      if(b[i] == '\n') hook_line--;
-      if(hook_line == 0) break;
+  int n = mini_atoi(argv[2]);
+  if(n > 0) {
+    int hook_line = number_line - n + 1;
+    if(hook_line > 0) {
+      int i;
+      while(res != 0) {
+        res = mini_fread(b, sizeof(char), BUF_SIZE, f);
+        for(i=0; i<res; i++) {
+          if(b[i] == '\n') hook_line--;
+          if(hook_line == 0) break;
+        }
+        if(hook_line == 0) break;
+      }
+      mini_printf(b+i+1);
+      while((res = mini_fread(b, sizeof(char), BUF_SIZE, f)) != 0) mini_printf(b);
+    } else {
+      while((res = mini_fread(b, sizeof(char), BUF_SIZE, f)) != 0) mini_printf(b);
     }
-    if(hook_line == 0) break;
   }
-
-  mini_printf(b+i+1);
-  while((res = mini_fread(b, sizeof(char), BUF_SIZE, f)) != 0) {
-    mini_printf(b);
-  }
-
+  
   mini_fclose(f);  
   mini_free(b);  
   mini_exit();

@@ -109,7 +109,7 @@ void test_mini_string() {
   char s4[30]; 
   char s5[] = "chaine s5";
   mini_strcpy(s4, s5);
-  printf("on copie %s dans s4: %s <-- s4 apres mini_strcpy\n", s5, s4, s4);
+  printf("on copie %s dans s4: %s <-- s4 apres mini_strcpy\n", s5, s4);
   
   mini_printf("\n\t[mini_strlen]\n");
   char s6[] = "une chaine";

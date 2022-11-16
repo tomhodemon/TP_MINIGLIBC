@@ -1,4 +1,5 @@
 #include "../mini_lib.h"
+#include <stdio.h>
 
 int main(int argc, char **argv) {
   if(argc != 2) {
@@ -7,7 +8,7 @@ int main(int argc, char **argv) {
   }
 
   char *s = argv[1];
-
   mini_printf(s);
+
   mini_exit();
 }
