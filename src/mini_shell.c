@@ -79,12 +79,13 @@ void  execute(char **args) {
 }
      
 int main(int argc, char **argv) {
-  char  prompt[BUF_SIZE];
-  char  *args[64];
-     
+  char prompt[BUF_SIZE];
+  char *args[64];
+  int c; 
   while (1) {
-    mini_printf("me@term # \n");
-    mini_scanf(prompt, BUF_SIZE);
+    mini_printf("me@term $ \n");
+    c = mini_scanf(prompt, BUF_SIZE);
+    *((char*)prompt+c) = '\0';
     if(mini_strlen(prompt) >= 1){
       parse_args(prompt, args);
       if (mini_strcmp(args[0], "exit") == 0)
